@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { useRouter } from 'next/navigation';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import OrthoInput from "@/components/OrthoInput";
@@ -108,6 +109,7 @@ const JoinMembership = () => {
   const mockEmail = ["shuvamsantra10@gmail.com"];
   const mockPhoneNumber = ["010234567890"];
   const mockCertificationCode = "123456"; // Mock verification code
+  const router = useRouter();
 
   const DEFAULT_TIMER = 180; // 3 minutes in seconds
   const [timer, setTimer] = useState(0);
@@ -289,6 +291,7 @@ const JoinMembership = () => {
 
   const onSubmit = (data: FormValues) => {
     console.log("Form submitted with data:", data);
+    router.push('/TermsOfServicePage');
   };
 
   // Function to close all dropdowns except the one being opened
