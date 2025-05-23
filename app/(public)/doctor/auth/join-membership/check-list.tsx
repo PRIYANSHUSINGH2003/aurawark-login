@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Check } from 'lucide-react';
 import { Label } from '@/components/ui/label';
+import { useRouter } from "next/navigation";
+
 
 const termsData = [
   { id: 1, label: '만 14세 이상입니다.', required: true },
@@ -10,6 +12,7 @@ const termsData = [
 ];
 
 export default function TermsAgreement() {
+  const router = useRouter();
   const [checkedItems, setCheckedItems] = useState<number[]>(termsData.map(t => t.id));
 
   const isAllChecked = checkedItems.length === termsData.length;
@@ -64,7 +67,11 @@ export default function TermsAgreement() {
                 )}
               </Label>
               {item.id !== 1 && (
-                <span className="text-sm text-[#8395AC] ml-auto cursor-pointer font-normal">보기</span>
+                <span className="text-sm text-[#8395AC] ml-auto cursor-pointer font-normal"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    router.push("/TermsOfServicePage");
+                  }}>보기</span>
               )}
             </div>
           );
