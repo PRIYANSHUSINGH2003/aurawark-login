@@ -11,7 +11,7 @@ import MultiColumnDropdown, {
   ArrayItem,
 } from "@/components/ui/multi-column-dropdown";
 import CheckList from "./check-list";
-import { MedicalInstitutionModal } from '@/components/ui/MedicalInstitutionModal';
+import { Institution, MedicalInstitutionModal } from '@/components/ui/MedicalInstitutionModal';
 
 // Define the specialties data
 const SPECIALTIES = [
@@ -118,6 +118,11 @@ const JoinMembership = () => {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
+  const [selectedInstitution, setSelectedInstitution] = useState<Institution | null>(null);
+
+  const handleInstitutionSelect = (institution: Institution) => {
+    setSelectedInstitution(institution);
+  };
   const handleSearch = () => {
     // Add your search logic here
     console.log("Searching for:", searchTerm);
@@ -305,8 +310,8 @@ const JoinMembership = () => {
               emailCheckStatus === true
                 ? "사용가능한 아이디 (이메일)에요."
                 : emailCheckStatus === false
-                ? "이미 사용 중인 아이디(이메일)입니다."
-                : undefined
+                  ? "이미 사용 중인 아이디(이메일)입니다."
+                  : undefined
             }
             error={errors.email?.message}
             rightIcon={
@@ -373,7 +378,13 @@ const JoinMembership = () => {
             required
           />
 
-          <MedicalInstitution label="의료 기관명" cta="의료 기관명 검색" onClick={openModal}/>
+          <MedicalInstitution label="의료 기관명" cta="의료 기관명 검색" onClick={openModal} />
+          {selectedInstitution && (
+            <div className="flex justify-between items-center -mt-8 p-3 border rounded-lg bg-gray-50">
+              <p className="text-sm font-bold text-gray-800">{selectedInstitution.name}</p>
+            </div>
+          )}
+
           {/* Department Dropdown */}
           <div className="relative">
             <div
@@ -432,7 +443,7 @@ const JoinMembership = () => {
             required
           />
 
-          <MedicalInstitution label="담당 간호사" cta="담당 간호사 추가" onClick={openModal}/>
+          <MedicalInstitution label="담당 간호사" cta="담당 간호사 추가" onClick={openModal} />
 
           <OrthoInput
             label="휴대폰 번호"
@@ -447,8 +458,8 @@ const JoinMembership = () => {
               phoneNumberCheckStatus === true
                 ? "사용 가능한 전화번호입니다."
                 : phoneNumberCheckStatus === false
-                ? "이미 사용 중인 전화번호입니다."
-                : undefined
+                  ? "이미 사용 중인 전화번호입니다."
+                  : undefined
             }
             error={errors.phoneNumber?.message}
             rightIcon={
@@ -478,8 +489,8 @@ const JoinMembership = () => {
               certificationNumberCheckStatus === true
                 ? "인증 번호가 일치해요."
                 : certificationNumberCheckStatus === false
-                ? "인증 번호가 일치하지 않아요."
-                : undefined
+                  ? "인증 번호가 일치하지 않아요."
+                  : undefined
             }
             error={errors.certificationNumber?.message}
             rightIcon={
@@ -493,11 +504,10 @@ const JoinMembership = () => {
                   type="button"
                   onClick={handleCertificationNumberCheck}
                   disabled={!certSent || !isActive}
-                  className={`text-white ${
-                    !certSent || !isActive
-                      ? "bg-[color:var(--aiortho-gray-500)] hover:bg-[color:var(--aiortho-gray-500)]"
-                      : "bg-[color:var(--aiortho-primary)] hover:bg-[color:var(--aiortho-primary)]"
-                  } rounded-md h-8 font-medium text-[13px]`}
+                  className={`text-white ${!certSent || !isActive
+                    ? "bg-[color:var(--aiortho-gray-500)] hover:bg-[color:var(--aiortho-gray-500)]"
+                    : "bg-[color:var(--aiortho-primary)] hover:bg-[color:var(--aiortho-primary)]"
+                    } rounded-md h-8 font-medium text-[13px]`}
                 >
                   확인
                 </Button>
@@ -516,13 +526,14 @@ const JoinMembership = () => {
           </Button>
         </form>
         <MedicalInstitutionModal
-        isOpen={isModalOpen}
-        onClose={closeModal}
-        searchTerm={searchTerm}
-        onSearchTermChange={setSearchTerm}
-        onSearch={setHasSearched}
-        hasSearched={hasSearched}
-      />
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          searchTerm={searchTerm}
+          onSearchTermChange={setSearchTerm}
+          onSearch={setHasSearched}
+          hasSearched={hasSearched}
+          onSelect={handleInstitutionSelect}
+        />
       </div>
     </div>
   );

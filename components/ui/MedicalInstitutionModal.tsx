@@ -9,9 +9,10 @@ interface MedicalInstitutionModalProps {
   onSearchTermChange: (term: string) => void;
   onSearch: (value: boolean) => void;
   hasSearched: boolean;
+  onSelect: (institution: Institution) => void;
 }
 
-interface Institution {
+export interface Institution {
   name: string;
   location: string;
 }
@@ -22,7 +23,8 @@ export const MedicalInstitutionModal: React.FC<MedicalInstitutionModalProps> = (
   searchTerm,
   onSearchTermChange,
   onSearch,
-  hasSearched
+  hasSearched,
+  onSelect
 }) => {
   const institutions: Institution[] = [
     { name: '강남고려병원', location: '서울 관악구 관악로242' },
@@ -88,10 +90,10 @@ export const MedicalInstitutionModal: React.FC<MedicalInstitutionModalProps> = (
     <div className="flex fixed top-0 left-0 justify-center items-center bg-zinc-900 bg-opacity-50 size-full z-50">
       <div className="bg-white rounded-3xl w-[604px] max-sm:m-5 max-sm:w-[90%]">
         <div className="relative px-8 pt-12 pb-0">
-          <h2 className="mb-5 text-2xl text-zinc-900">
+          <h2 className="mb-5 text-2xl font-bold text-zinc-900">
             의료 기관명을 선택해주세요
           </h2>
-          <p className="text-base text-slate-500">
+          <p className="text-base font-semibold text-slate-400">
             검색 결과가 없을 경우 '기타'를 선택해주세요.
           </p>
           <button
@@ -165,26 +167,30 @@ export const MedicalInstitutionModal: React.FC<MedicalInstitutionModalProps> = (
               {filteredInstitutions.length > 0 ? (
                 <>
                   <div className="mb-5">
-                    <h3 className="text-lg text-zinc-900">
-                      <span>검색 결과</span>
+                    <h3 className="text-lg font-bold text-zinc-900">
+                      <span className='pr-3'>검색 결과</span>
                       <span className="text-sky-700">{filteredInstitutions.length}</span>
                       <span>건</span>
                     </h3>
                   </div>
-                  <div className="flex items-center px-4 py-0 mb-5 h-12 rounded-xl bg-slate-100 bg-opacity-50">
+                  <div className="flex items-center px-4 py-0 mb-5 h-12 rounded-xl bg-slate-100 bg-opacity-50 ">
                     <div className="text-sm font-bold text-zinc-900 w-[268px]">의료 기관명</div>
                     <div className="flex-1 text-sm font-bold text-zinc-900">소재지</div>
                   </div>
-                  <div>
+                  <div className="border-solid border-t-[0.4px] border-t-slate-200 border-t-opacity-40">
                     {currentItems.map((institution, index) => (
                       <div
                         key={index}
-                        className="flex px-4 py-2.5 border-solid border-b-[0.4px] border-b-slate-400 border-b-opacity-40 h-[68px]"
+                        className="flex px-4 pt-6.5 border-solid border-b-[0.4px] border-b-slate-200 border-b-opacity-40 h-[68px]"
+                        onClick={() => {
+                        onSelect(institution);
+                        onClose();
+                      }}
                       >
-                        <div className="text-sm text-zinc-900 w-[268px]">
+                        <div className="text-sm text-slate-500 w-[338px]">
                           {institution.name}
                         </div>
-                        <div className="flex-1 text-sm text-zinc-900">
+                        <div className="flex-1 text-sm text-slate-500">
                           {institution.location}
                         </div>
                       </div>
@@ -203,7 +209,7 @@ export const MedicalInstitutionModal: React.FC<MedicalInstitutionModalProps> = (
                       <div
                         key={index}
                         className={`w-8 h-8 text-sm flex items-center justify-center rounded cursor-pointer ${page === currentPage
-                          ? "bg-sky-500 text-white"
+                          ? "text-sky-500"
                           : "text-slate-500"
                           }`}
                         onClick={() =>
