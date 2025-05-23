@@ -63,7 +63,9 @@ export default function TermsAgreement() {
                   <span className="text-[#66798D] font-medium ml-1">(선택)</span>
                 )}
               </Label>
-              <span className="text-sm text-[#8395AC] ml-auto cursor-pointer font-normal">보기</span>
+              {item.id !== 1 && (
+                <span className="text-sm text-[#8395AC] ml-auto cursor-pointer font-normal">보기</span>
+              )}
             </div>
           );
         })}
