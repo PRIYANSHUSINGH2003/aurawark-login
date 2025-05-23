@@ -12,6 +12,8 @@ import MultiColumnDropdown, {
 } from "@/components/ui/multi-column-dropdown";
 import CheckList from "./check-list";
 import { Institution, MedicalInstitutionModal } from '@/components/ui/MedicalInstitutionModal';
+import MedicalNurse from "./medical-nurse";
+import { NurseContactus, NurseContactusModal } from "@/components/ui/NurseContactusModal";
 
 // Define the specialties data
 const SPECIALTIES = [
@@ -114,15 +116,33 @@ const JoinMembership = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [hasSearched, setHasSearched] = useState(false);
+  const [isNurseModalOpen, setIsNurseModalOpen] = useState(false);
+  const [nurseSearchTerm, setNurseSearchTerm] = useState('');
+  const [hasNurseSearched, setHasNurseSearched] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+  const nurseopenModal = () => setIsNurseModalOpen(true);
+  const nursecloseModal = () => setIsNurseModalOpen(false);
 
   const [selectedInstitution, setSelectedInstitution] = useState<Institution | null>(null);
 
   const handleInstitutionSelect = (institution: Institution) => {
     setSelectedInstitution(institution);
   };
+
+  const [selectedNurse, setSelectedNurse] = useState<NurseContactus | null>(null);
+
+  const handleNurseSelect = (nurse: NurseContactus) => {
+    setSelectedNurse(nurse);
+  };
+
+  const handleNurseSearch = () => {
+    // Add your search logic here
+    console.log("Searching for:", nurseSearchTerm);
+    setHasNurseSearched(true);
+  };
+
   const handleSearch = () => {
     // Add your search logic here
     console.log("Searching for:", searchTerm);
@@ -443,7 +463,12 @@ const JoinMembership = () => {
             required
           />
 
-          <MedicalInstitution label="담당 간호사" cta="담당 간호사 추가" onClick={openModal} />
+          <MedicalNurse label="담당 간호사" cta="담당 간호사 추가" onClick={nurseopenModal} />
+          {selectedNurse && (
+            <div className="flex justify-between items-center -mt-8 p-3 border rounded-lg bg-gray-50">
+              <p className="text-sm font-bold text-gray-800">{selectedNurse.name}</p>
+            </div>
+          )}
 
           <OrthoInput
             label="휴대폰 번호"
@@ -533,6 +558,15 @@ const JoinMembership = () => {
           onSearch={setHasSearched}
           hasSearched={hasSearched}
           onSelect={handleInstitutionSelect}
+        />
+        <NurseContactusModal
+          isOpen={isNurseModalOpen}
+          onClose={nursecloseModal}
+          searchTerm={nurseSearchTerm}
+          onSearchTermChange={setNurseSearchTerm}
+          onSearch={handleNurseSearch}
+          hasSearched={hasNurseSearched}
+          onSelect={handleNurseSelect}
         />
       </div>
     </div>

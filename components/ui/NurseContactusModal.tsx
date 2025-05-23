@@ -2,22 +2,22 @@
 
 import React, { useState } from 'react';
 
-interface MedicalInstitutionModalProps {
+interface NurseContactusModalProps {
   isOpen: boolean;
   onClose: () => void;
   searchTerm: string;
   onSearchTermChange: (term: string) => void;
   onSearch: (value: boolean) => void;
   hasSearched: boolean;
-  onSelect: (institution: Institution) => void;
+  onSelect: (nursecontactus: NurseContactus) => void;
 }
 
-export interface Institution {
+export interface NurseContactus {
   name: string;
-  location: string;
+  phone: string;
 }
 
-export const MedicalInstitutionModal: React.FC<MedicalInstitutionModalProps> = ({
+export const NurseContactusModal: React.FC<NurseContactusModalProps> = ({
   isOpen,
   onClose,
   searchTerm,
@@ -26,39 +26,39 @@ export const MedicalInstitutionModal: React.FC<MedicalInstitutionModalProps> = (
   hasSearched,
   onSelect
 }) => {
-  const institutions: Institution[] = [
-    { name: '강남고려병원', location: '서울 관악구 관악로242' },
-    { name: '강남차병원', location: '서울 강남구 논현로 566' },
-    { name: '강남세브란스병원', location: '서울 강남구 언주로 211' },
-    { name: '삼성서울병원', location: '서울 강남구 일원로 81' },
-    { name: '서울아산병원', location: '서울 송파구 올림픽로43길 88' },
-    { name: '한양대병원', location: '서울 성동구 왕십리로 222-1' },
-    { name: '고려대학교안암병원', location: '서울 성북구 고려대로 73' },
-    { name: '연세세브란스병원', location: '서울 서대문구 연세로 50' },
-    { name: '이대목동병원', location: '서울 양천구 안양천로 1071' },
-    { name: '서울성모병원', location: '서울 서초구 반포대로 222' },
-    { name: '중앙대학교병원', location: '서울 동작구 흑석로 102' },
-    { name: '신촌세브란스병원', location: '서울 서대문구 연세로 50' },
+  const nursecontactus: NurseContactus[] = [
+    { name: '김간', phone: '010******2029' },
+    { name: '김간고', phone: '010********945' },
+    { name: '김간호', phone: '010********745' },
+    { name: '삼성서울병원', phone: '010********345' },
+    { name: '서울아산병원', phone: '010********745' },
+    { name: '한양대병원', phone: '010********345' },
+    { name: '고려대학교안암병원', phone: '010********745' },
+    { name: '연세세브란스병원', phone: '010********345' },
+    { name: '이대목동병원', phone: '010********745' },
+    { name: '서울성모병원', phone: '010********345' },
+    { name: '중앙대학교병원', phone: '010********745' },
+    { name: '신촌세브란스병원', phone: '010********345' },
   ];
 
-  const [filteredInstitutions, setFilteredInstitutions] = useState<Institution[]>([]);
+  const [filteredContactus, setFilteredContactus] = useState<NurseContactus[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 3;
 
-  const totalPages = Math.ceil(filteredInstitutions.length / itemsPerPage);
+  const totalPages = Math.ceil(filteredContactus.length / itemsPerPage);
 
   const handleSearch = () => {
-    const results = institutions.filter(
+    const results = nursecontactus.filter(
       (inst) =>
         inst.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        inst.location.toLowerCase().includes(searchTerm.toLowerCase())
+        inst.phone.toLowerCase().includes(searchTerm.toLowerCase())
     );
-    setFilteredInstitutions(results);
+    setFilteredContactus(results);
     setCurrentPage(1);
     onSearch(true);
   };
 
-  const currentItems = filteredInstitutions.slice(
+  const currentItems = filteredContactus.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -91,10 +91,10 @@ export const MedicalInstitutionModal: React.FC<MedicalInstitutionModalProps> = (
       <div className="bg-white rounded-3xl w-[604px] max-sm:m-5 max-sm:w-[90%]">
         <div className="relative px-8 pt-12 pb-0">
           <h2 className="mb-5 text-2xl font-bold text-zinc-900">
-            의료 기관명을 선택해주세요
+            담당 간호사를 선택해주세요
           </h2>
           <p className="text-base font-semibold text-slate-400">
-            검색 결과가 없을 경우 '기타'를 선택해주세요.
+            선택된 담당 간호사가 환자 관리를 서포트합니다.
           </p>
           <button
             onClick={onClose}
@@ -121,6 +121,7 @@ export const MedicalInstitutionModal: React.FC<MedicalInstitutionModalProps> = (
               <input
                 type="text"
                 value={searchTerm}
+                placeholder="간호사명 검색"
                 onChange={(e) => onSearchTermChange(e.target.value)}
                 className="px-4 py-3.5 w-full h-12 text-base rounded-xl border border-solid border-zinc-200"
               />
@@ -164,34 +165,34 @@ export const MedicalInstitutionModal: React.FC<MedicalInstitutionModalProps> = (
           </div>
           {hasSearched ? (
             <div>
-              {filteredInstitutions.length > 0 ? (
+              {filteredContactus.length > 0 ? (
                 <>
                   <div className="mb-5">
                     <h3 className="text-lg font-bold text-zinc-900">
                       <span className='pr-3'>검색 결과</span>
-                      <span className="text-sky-700">{filteredInstitutions.length}</span>
+                      <span className="text-sky-700">{filteredContactus.length}</span>
                       <span>건</span>
                     </h3>
                   </div>
                   <div className="flex items-center px-4 py-0 mb-5 h-12 rounded-xl bg-slate-100 bg-opacity-50 ">
-                    <div className="text-sm font-bold text-zinc-900 w-[268px]">의료 기관명</div>
-                    <div className="flex-1 text-sm font-bold text-zinc-900">소재지</div>
+                    <div className="text-sm font-bold text-zinc-900 w-[268px]">간호사명</div>
+                    <div className="flex-1 text-sm font-bold text-zinc-900">휴대폰 번호</div>
                   </div>
                   <div className="border-solid border-t-[0.4px] border-t-slate-200 border-t-opacity-40">
-                    {currentItems.map((institution, index) => (
+                    {currentItems.map((nursecontactus, index) => (
                       <div
                         key={index}
                         className="flex px-4 pt-6.5 border-solid border-b-[0.4px] border-b-slate-200 border-b-opacity-40 h-[68px]"
                         onClick={() => {
-                        onSelect(institution);
+                        onSelect(nursecontactus);
                         onClose();
                       }}
                       >
-                        <div className="text-sm text-slate-500 w-[338px]">
-                          {institution.name}
+                        <div className="text-sm text-slate-500 w-[268px]">
+                          {nursecontactus.name}
                         </div>
                         <div className="flex-1 text-sm text-slate-500">
-                          {institution.location}
+                          {nursecontactus.phone}
                         </div>
                       </div>
                     ))}
@@ -263,13 +264,7 @@ export const MedicalInstitutionModal: React.FC<MedicalInstitutionModalProps> = (
             </div>
           ) : (
             <div className="p-2 text-zinc-900">
-              <h3 className="mb-4 text-xl font-bold text-sky-700">Tip</h3>
-              <div>
-                <h4 className="mb-1 text-sm font-semibold">의료 기관명 or 소재지</h4>
-                <p className="text-sm text-slate-400">
-                  예) 가톨릭대학교 서울성모병원 or 서초구 반포대로 222
-                </p>
-              </div>
+                
             </div>
           )}
 
