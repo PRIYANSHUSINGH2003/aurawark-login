@@ -13,6 +13,7 @@ interface NurseContactusModalProps {
 }
 
 export interface NurseContactus {
+  id: string;
   name: string;
   phone: string;
 }
@@ -27,18 +28,18 @@ export const NurseContactusModal: React.FC<NurseContactusModalProps> = ({
   onSelect
 }) => {
   const nursecontactus: NurseContactus[] = [
-    { name: '김간', phone: '010******2029' },
-    { name: '김간고', phone: '010********945' },
-    { name: '김간호', phone: '010********745' },
-    { name: '삼성서울병원', phone: '010********345' },
-    { name: '서울아산병원', phone: '010********745' },
-    { name: '한양대병원', phone: '010********345' },
-    { name: '고려대학교안암병원', phone: '010********745' },
-    { name: '연세세브란스병원', phone: '010********345' },
-    { name: '이대목동병원', phone: '010********745' },
-    { name: '서울성모병원', phone: '010********345' },
-    { name: '중앙대학교병원', phone: '010********745' },
-    { name: '신촌세브란스병원', phone: '010********345' },
+    { id:'1', name: '김간', phone: '010******2029' },
+    { id:'2', name: '김간고', phone: '010********945' },
+    { id:'3', name: '김간호', phone: '010********745' },
+    { id:'4', name: '삼성서울병원', phone: '010********345' },
+    { id:'5', name: '서울아산병원', phone: '010********745' },
+    { id:'6', name: '한양대병원', phone: '010********345' },
+    { id:'7', name: '고려대학교안암병원', phone: '010********745' },
+    { id:'8', name: '연세세브란스병원', phone: '010********345' },
+    { id:'9', name: '이대목동병원', phone: '010********745' },
+    { id:'10', name: '서울성모병원', phone: '010********345' },
+    { id:'11', name: '중앙대학교병원', phone: '010********745' },
+    { id:'12', name: '신촌세브란스병원', phone: '010********345' },
   ];
 
   const [filteredContactus, setFilteredContactus] = useState<NurseContactus[]>([]);

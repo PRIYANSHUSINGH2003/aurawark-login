@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { useRouter } from 'next/navigation';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import OrthoInput from "@/components/OrthoInput";
@@ -108,6 +109,7 @@ const JoinMembership = () => {
   const mockEmail = ["shuvamsantra10@gmail.com"];
   const mockPhoneNumber = ["010234567890"];
   const mockCertificationCode = "123456"; // Mock verification code
+  const router = useRouter();
 
   const DEFAULT_TIMER = 180; // 3 minutes in seconds
   const [timer, setTimer] = useState(0);
@@ -131,10 +133,18 @@ const JoinMembership = () => {
     setSelectedInstitution(institution);
   };
 
-  const [selectedNurse, setSelectedNurse] = useState<NurseContactus | null>(null);
+  const [selectedNurses, setSelectedNurses] = useState<NurseContactus[]>([]);
 
   const handleNurseSelect = (nurse: NurseContactus) => {
-    setSelectedNurse(nurse);
+    setSelectedNurses((prev) => {
+      if (!prev.find((n) => n.id === nurse.id)) {
+        return [...prev, nurse];
+      }
+      return prev;
+    });
+  };
+  const handleNurseRemove = (nurseId: string) => {
+    setSelectedNurses((prev) => prev.filter((n) => n.id !== nurseId));
   };
 
   const handleNurseSearch = () => {
@@ -281,6 +291,7 @@ const JoinMembership = () => {
 
   const onSubmit = (data: FormValues) => {
     console.log("Form submitted with data:", data);
+    router.push('/TermsOfServicePage');
   };
 
   // Function to close all dropdowns except the one being opened
@@ -464,9 +475,24 @@ const JoinMembership = () => {
           />
 
           <MedicalNurse label="담당 간호사" cta="담당 간호사 추가" onClick={nurseopenModal} />
-          {selectedNurse && (
-            <div className="flex justify-between items-center -mt-8 p-3 border rounded-lg bg-gray-50">
-              <p className="text-sm font-bold text-gray-800">{selectedNurse.name}</p>
+          {selectedNurses.length > 0 && (
+            <div className="space-y-2 -mt-6.5">
+              {selectedNurses.map((nurse) => (
+                <div key={nurse.id} className="flex items-center justify-between space-x-2">
+                  {/* Name box with border and background */}
+                  <div className="p-3 border rounded-lg bg-gray-50 flex-1">
+                    <p className="text-sm font-bold text-gray-800">{nurse.name}</p>
+                  </div>
+
+                  {/* X button outside border */}
+                  <button
+                    onClick={() => handleNurseRemove(nurse.id)}
+                    className="text-gray-400 bg-[color:var(--aiortho-gray-100)] hover:bg-[color:var(--aiortho-gray-100)] rounded-[50%] font-bold h-6 w-6 flex items-center justify-center text-xs cursor-pointer"
+                  >
+                    ✕
+                  </button>
+                </div>
+              ))}
             </div>
           )}
 
