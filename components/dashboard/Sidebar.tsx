@@ -30,6 +30,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         router.push(path);
     };
 
+    function handleItemClick(arg0: string): void {
+        throw new Error("Function not implemented.");
+    }
+
     return (
         <nav
             className={`box-border fixed left-0 z-50 px-0 py-2 m-0 w-60 bg-white border-solid border-r-[0.5px] border-r-zinc-200 h-[calc(100vh_-_72px)] top-[72px] 
