@@ -20,17 +20,18 @@ interface PatientTableRowProps {
 
 // Define column widths to ensure alignment - same as in PatientTable.tsx
 const columnWidths = {
-  id: "w-24",
-  name: "w-24",
-  birthdate: "w-24",
-  gender: "w-16",
-  sa: "w-24",
-  doctor: "w-24",
-  treatmentPeriod: "w-32",
-  registrationDate: "w-36",
-  lastPrescriptionDate: "w-28",
-  status: "w-28 flex justify-center"
+  id: "w-20 sm:w-24 md:w-28",
+  name: "w-20 sm:w-24 md:w-28",
+  birthdate: "w-20 sm:w-24 md:w-28",
+  gender: "w-14 sm:w-16 md:w-20",
+  sa: "w-20 sm:w-24 md:w-28",
+  doctor: "w-20 sm:w-24 md:w-28",
+  treatmentPeriod: "w-24 sm:w-32 md:w-42",
+  registrationDate: "w-28 sm:w-36 md:w-40",
+  lastPrescriptionDate: "w-24 sm:w-28 md:w-32",
+  status: "w-24 sm:w-28 md:w-32 flex justify-center",
 };
+
 
 const PatientTableRow: React.FC<PatientTableRowProps> = ({ patient }) => {
   return (

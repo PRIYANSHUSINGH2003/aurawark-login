@@ -1,5 +1,6 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import HomeIcon from "./icons/HomeIcon";
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
@@ -11,14 +12,32 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
     const [isDropdownOpen, setDropdownOpen] = useState(false);
     const [isDropdownOpen2, setDropdownOpen2] = useState(false);
+    const router = useRouter();
+    const pathname = usePathname(); // get current route
 
+    // Determine active item based on pathname
+    const getActiveItem = () => {
+        if (pathname.startsWith("/doctor/management/patient")) return "prescription-history";
+        if (pathname === "/doctor/standard-treatment") return "standard-treatment";
+        if (pathname === "/doctor/home") return "home";
+        if (pathname === "/doctor/my/health-status") return "health-status";
+        return "";
+    };
 
-    const toggleDropdown = () => {
-        setDropdownOpen(!isDropdownOpen);
+    const activeItem = getActiveItem();
+    const activeClass = "bg-[#EEF4FF] text-[#2B61FF] font-semibold";
+
+    const handleRedirect = (itemId: string, path: string) => {
+        router.push(path);
     };
-    const toggleDropdown2 = () => {
-        setDropdownOpen2(!isDropdownOpen2);
-    };
+
+    const toggleDropdown = () => setDropdownOpen(!isDropdownOpen);
+    const toggleDropdown2 = () => setDropdownOpen2(!isDropdownOpen2);
+
+    function handleItemClick(arg0: string): void {
+        throw new Error("Function not implemented.");
+    }
+
     return (
         <nav
             className={`box-border fixed left-0 z-50 px-0 py-2 m-0 w-60 bg-white border-solid border-r-[0.5px] border-r-zinc-200 h-[calc(100vh_-_72px)] top-[72px] 
@@ -27,9 +46,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         >
             <ul className="p-0 m-0 list-none">
                 <li className="box-border relative p-0 m-0 w-full h-12">
-                    <div className="box-border absolute top-0 left-6 p-0 m-0 w-48 h-12 bg-indigo-50 rounded-xl" />
+                    <div className={`box-border absolute top-0 left-6 p-0 m-0 w-48 h-12 ${activeItem === "home" ? activeClass : "hover:bg-indigo-50"
+                        } rounded-xl`} onClick={() => handleRedirect("home", "/doctor/home")} />
                     <a
-                        href="#"
+                        href="/doctor/home"
                         className="box-border flex absolute top-3.5 left-10 gap-2 items-center p-0 m-0 h-5"
                         onClick={onClose}
                     >
@@ -42,8 +62,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                 <li className="box-border relative p-0 m-0 w-full h-12">
                     {/* Sidebar Item - Dropdown */}
                     <div
-                        className="relative flex items-center justify-between w-full h-12 px-10 hover:bg-[#EEF4FF] rounded-[10px] mt-2 cursor-pointer"
-                        onClick={toggleDropdown}
+                        className={`flex items-center justify-between w-full h-12 px-10 rounded-[10px] cursor-pointer hover:bg-[#EEF4FF]`}
+                        onClick={() => {
+                            setDropdownOpen(!isDropdownOpen);
+                        }}
                     >
                         <div className="flex items-center">
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -66,15 +88,23 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                     {isDropdownOpen && (
                         <div className="hidden lg:block ml-10 bg-white rounded-md overflow-hidden transition-all duration-300 ease-in-out">
                             <ul className="flex flex-col space-y-1 py-2">
-                                <li className="px-4 py-2 hover:bg-[#EEF4FF] rounded-md cursor-pointer text-[#66798D] text-sm">처방 내역</li>
-                                <li className="px-4 py-2 hover:bg-[#EEF4FF] rounded-md cursor-pointer text-[#66798D] text-sm">표준 치료 프로그램</li>
+                                <li className={`px-4 py-2 ${activeItem === "prescription-history"
+                                    ? activeClass
+                                    : "hover:bg-[#EEF4FF]"
+                                    } rounded-md cursor-pointer text-[#66798D] text-sm`} onClick={() => handleRedirect("prescription-history", "/doctor/management/patient")}>처방 내역</li>
+                                <li className={`px-4 py-2 ${activeItem === "standard-treatment"
+                                    ? activeClass
+                                    : "hover:bg-[#EEF4FF]"
+                                    } rounded-md cursor-pointer text-[#66798D] text-sm`} onClick={() => handleRedirect("standard-treatment", "/doctor/standard-treatment")}>표준 치료 프로그램</li>
                             </ul>
                         </div>
                     )}
                     {/* Sidebar Item - Dropdown */}
                     <div
-                        className="relative flex items-center justify-between w-full h-12 px-10 hover:bg-[#EEF4FF] rounded-[10px] mt-2 cursor-pointer"
-                        onClick={toggleDropdown2}
+                        className={`flex items-center justify-between w-full h-12 px-10 rounded-[10px] cursor-pointer hover:bg-[#EEF4FF]`}
+                        onClick={() => {
+                            setDropdownOpen2(!isDropdownOpen2);
+                        }}
                     >
                         <div className="flex items-center">
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -94,7 +124,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                     {isDropdownOpen2 && (
                         <div className="hidden lg:block ml-10 bg-white rounded-md overflow-hidden transition-all duration-300 ease-in-out">
                             <ul className="flex flex-col space-y-1 py-2">
-                                <li className="px-4 py-2 hover:bg-[#EEF4FF] rounded-md cursor-pointer text-[#66798D] text-sm">개인정보 수정</li>
+                                <li className={`px-4 py-2 ${activeItem === "health-status"
+                                    ? activeClass
+                                    : "hover:bg-[#EEF4FF]"
+                                    } rounded-md cursor-pointer text-[#66798D] text-sm`} onClick={() => handleItemClick("health-status")}>개인정보 수정</li>
                             </ul>
                         </div>
                     )}

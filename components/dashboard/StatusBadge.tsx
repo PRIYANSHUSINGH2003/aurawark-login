@@ -5,7 +5,7 @@ interface StatusBadgeProps {
 }
 
 const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
-  if (status === "처방대기") {
+  if (status === "waiting") {
     return (
       <div className="flex items-center justify-center">
         <div className="relative flex items-center px-4 py-1 bg-green-200 bg-opacity-20 rounded-full">
@@ -14,12 +14,21 @@ const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
         </div>
       </div>
     );
-  } else if (status === "처방전") {
+  } else if (status === "prescription") {
     return (
       <div className="flex items-center justify-center">
         <div className="relative flex items-center px-4 py-1 bg-blue-100 bg-opacity-[0.16] rounded-full">
           <span className="w-2 h-2 mr-2 bg-[#007DEB] rounded-full"></span>
           <span className="text-sm font-bold text-[#007DEB]">처방전</span>
+        </div>
+      </div>
+    );
+  }else if (status === "completed") {
+    return (
+      <div className="flex items-center justify-center">
+        <div className="relative flex items-center px-4 py-1 bg-blue-100 bg-opacity-[0.16] rounded-full">
+          <span className="w-2 h-2 mr-2 bg-slate-500 rounded-full"></span>
+          <span className="text-sm font-bold text-slate-500">처방전</span>
         </div>
       </div>
     );

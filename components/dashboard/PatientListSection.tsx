@@ -45,7 +45,7 @@ const PatientListSection: React.FC = () => {
                             미처방
                         </h3>
                         <span className="box-border p-0 m-0 text-2xl font-bold leading-5 text-sky-700">
-                            2712
+                            {searchQuery ? filteredData.length : patientData.length}
                         </span>
                         <span className="box-border p-0 m-0 text-2xl font-bold leading-5 text-zinc-900">
                             명
@@ -77,8 +77,24 @@ const PatientListSection: React.FC = () => {
 
                     </div>
                 </div>
-
-                <PatientTable data={currentData} />
+                {currentData.length > 0 ? (
+                    <PatientTable data={currentData} />
+                ) : (
+                    <div
+                        className="flex flex-col items-center justify-center h-[400px] text-center"
+                        style={{ width: "100%" }}
+                    >
+                        <p className="text-xl font-semibold text-slate-500 mb-4">
+                            검색 결과가 없습니다.
+                        </p>
+                        <button
+                            className="px-6 py-3 bg-sky-700 text-white font-bold rounded-2xl hover:bg-sky-800 transition"
+                            onClick={() => setSearchQuery("")}
+                        >
+                            전체 보기
+                        </button>
+                    </div>
+                )}
             </div>
             <Pagination
                 currentPage={currentPage}
