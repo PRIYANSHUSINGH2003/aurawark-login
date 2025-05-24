@@ -10,12 +10,11 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
-    const [isDropdownOpen, setDropdownOpen] = useState(false);
-    const [isDropdownOpen2, setDropdownOpen2] = useState(false);
+    const [isDropdownOpen, setDropdownOpen] = useState(true);
+    const [isDropdownOpen2, setDropdownOpen2] = useState(true);
     const router = useRouter();
-    const pathname = usePathname(); // get current route
+    const pathname = usePathname();
 
-    // Determine active item based on pathname
     const getActiveItem = () => {
         if (pathname.startsWith("/doctor/management/patient")) return "prescription-history";
         if (pathname === "/doctor/standard-treatment") return "standard-treatment";
@@ -30,13 +29,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
     const handleRedirect = (itemId: string, path: string) => {
         router.push(path);
     };
-
-    const toggleDropdown = () => setDropdownOpen(!isDropdownOpen);
-    const toggleDropdown2 = () => setDropdownOpen2(!isDropdownOpen2);
-
-    function handleItemClick(arg0: string): void {
-        throw new Error("Function not implemented.");
-    }
 
     return (
         <nav
