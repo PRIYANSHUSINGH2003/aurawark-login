@@ -42,13 +42,21 @@ const DoctorAuth = () => {
   } = useForm<FormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: "test@example.com",
+      password: "Test@1234",
     },
   });
 
   const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
     console.log(data);
+    const { email, password } = data;
+
+    // Replace with your real login logic if needed
+    if (email === "test@example.com" && password === "Test@1234") {
+      router.push("/doctor/home");
+    } else {
+      alert("이메일 또는 비밀번호가 잘못되었습니다."); // "Email or password is incorrect"
+    }
   };
 
   const togglePasswordVisibility = () => {
