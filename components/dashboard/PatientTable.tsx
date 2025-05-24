@@ -2,6 +2,23 @@ import React from "react";
 import PatientTableRow from "./PatientTableRow";
 import SortIcon from "./icons/SortIcon";
 
+interface Patient {
+  id: string;
+  name: string;
+  birthdate: string;
+  gender: string;
+  sa: string;
+  doctor: string;
+  treatmentPeriod: string;
+  registrationDate: string;
+  lastPrescriptionDate: string;
+  status: string;
+}
+
+interface Props {
+  data: Patient[];
+}
+
 // Define column widths to ensure alignment
 const columnWidths = {
   id: "w-24 sm:w-24",
@@ -17,7 +34,7 @@ const columnWidths = {
 };
 
 // Sample data for demonstration
-const patientData = [
+export const patientData = [
   {
     id: "82864",
     name: "박명수",
@@ -116,7 +133,7 @@ const patientData = [
   }
 ];
 
-const PatientTable: React.FC = () => {
+const PatientTable: React.FC<Props> = ({ data }) => {
   return (
     <div className="box-border flex flex-col p-0 m-0 w-full overflow-x-auto">
       <div className="min-w-[900px]">
@@ -184,7 +201,7 @@ const PatientTable: React.FC = () => {
         </div>
 
         <div className="box-border flex flex-col p-0 m-0 whitespace-nowrap">
-          {patientData.map((patient, index) => (
+          {data.map((patient, index) => (
             <React.Fragment key={index}>
               <PatientTableRow patient={patient} />
               {index < patientData.length - 1 && (

@@ -1,11 +1,27 @@
-"use client";
-import React from "react";
+import React, { useState } from "react";
 import PatientTable from "./PatientTable";
 import Pagination from "./Pagination";
 import SearchIcon from "./icons/SearchIcon";
 import FilterIcon from "./icons/FilterIcon";
 
+// sample data import
+import { patientData } from "./PatientTable";
+
+const ITEMS_PER_PAGE = 5;
+
 const PatientListSection: React.FC = () => {
+    const [currentPage, setCurrentPage] = useState(1);
+    const [searchQuery, setSearchQuery] = useState("");
+
+    // Filter data based on search query (by patient name, case-insensitive)
+    const filteredData = patientData.filter((patient) =>
+        patient.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const currentData = filteredData.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+
     return (
         <section className="box-border p-0 m-0 mb-16">
             <div className="box-border flex justify-between items-center p-0 m-0 mb-7 max-md:flex-col max-md:gap-4 max-md:items-start">
@@ -50,6 +66,11 @@ const PatientListSection: React.FC = () => {
                             <input
                                 type="text"
                                 placeholder="검색"
+                                value={searchQuery}
+                                onChange={(e) => {
+                                    setSearchQuery(e.target.value);
+                                    setCurrentPage(1); // Reset to page 1 on new search
+                                }}
                                 className="bg-transparent outline-none border-none text-sm text-slate-700 placeholder-slate-400 w-full"
                             />
                         </div>
@@ -57,9 +78,13 @@ const PatientListSection: React.FC = () => {
                     </div>
                 </div>
 
-                <PatientTable />
+                <PatientTable data={currentData} />
             </div>
-            <Pagination />
+            <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+            />
         </section>
     );
 };
