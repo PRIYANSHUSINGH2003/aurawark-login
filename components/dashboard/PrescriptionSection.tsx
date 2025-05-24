@@ -1,8 +1,10 @@
+"use client";
 import React, { useState } from "react";
 import PrescriptionTable from "./PrescriptionTable";
 import Pagination from "./Pagination";
 import SearchIcon from "./icons/SearchIcon";
 import FilterIcon from "./icons/FilterIcon";
+import { useRouter } from "next/navigation";
 
 // sample data import
 import { PrescriptionData } from "./PrescriptionTable";
@@ -10,6 +12,7 @@ import { PrescriptionData } from "./PrescriptionTable";
 const ITEMS_PER_PAGE = 5;
 
 const PrescriptionSection: React.FC = () => {
+    const router = useRouter();
     const [currentPage, setCurrentPage] = useState(1);
     const [searchQuery, setSearchQuery] = useState("");
 
@@ -30,7 +33,9 @@ const PrescriptionSection: React.FC = () => {
                         환자 명단
                     </h2>
                 </div>
-                <button className="box-border gap-2.5 px-6 py-3.5 m-0 text-sm font-bold leading-6 text-white bg-sky-700 rounded-2xl cursor-pointer">
+                <button className="box-border gap-2.5 px-6 py-3.5 m-0 text-sm font-bold leading-6 text-white bg-sky-700 rounded-2xl cursor-pointer"
+                onClick={() => router.push("/doctor/management/patient/registration")}
+                >
                     환자 등록하기
                 </button>
             </div>
