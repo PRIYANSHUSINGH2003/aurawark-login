@@ -1,8 +1,8 @@
 import React from "react";
-import PatientTableRow from "./PatientTableRow";
+import PrescriptionTableRow from "./PrescriptionTableRow";
 import SortIcon from "./icons/SortIcon";
 
-interface Patient {
+interface Prescription {
   id: string;
   name: string;
   birthdate: string;
@@ -16,7 +16,7 @@ interface Patient {
 }
 
 interface Props {
-  data: Patient[];
+  data: Prescription[];
 }
 
 // Define column widths to ensure alignment
@@ -34,106 +34,106 @@ const columnWidths = {
 };
 
 // Sample data for demonstration
-export const patientData = [
-  {
-    id: "82864",
-    name: "박명수",
-    birthdate: "980530",
-    gender: "남",
-    sa: "M/9m7d",
-    doctor: "-",
-    treatmentPeriod: "-",
-    registrationDate: "2025.01.30 (화)",
-    lastPrescriptionDate: "-",
-    status: "처방대기"
-  },
-  {
-    id: "82864",
-    name: "박명수",
-    birthdate: "980530",
-    gender: "남",
-    sa: "M/9m7d",
-    doctor: "-",
-    treatmentPeriod: "-",
-    registrationDate: "2025.01.30 (화)",
-    lastPrescriptionDate: "-",
-    status: "처방대기"
-  },
-  {
-    id: "82864",
-    name: "박명수",
-    birthdate: "980530",
-    gender: "남",
-    sa: "M/9m7d",
-    doctor: "-",
-    treatmentPeriod: "-",
-    registrationDate: "2025.01.30 (화)",
-    lastPrescriptionDate: "-",
-    status: "처방대기"
-  },
-  {
-    id: "82864",
-    name: "박명수",
-    birthdate: "980530",
-    gender: "남",
-    sa: "M/9m7d",
-    doctor: "-",
-    treatmentPeriod: "-",
-    registrationDate: "2025.01.30 (화)",
-    lastPrescriptionDate: "-",
-    status: "처방대기"
-  },
-  {
-    id: "82864",
-    name: "박명수",
-    birthdate: "980530",
-    gender: "남",
-    sa: "M/9m7d",
-    doctor: "-",
-    treatmentPeriod: "-",
-    registrationDate: "2025.01.30 (화)",
-    lastPrescriptionDate: "-",
-    status: "처방대기"
-  },
-  {
-    id: "82864",
-    name: "박명수",
-    birthdate: "980530",
-    gender: "남",
-    sa: "M/9m7d",
-    doctor: "-",
-    treatmentPeriod: "-",
-    registrationDate: "2025.01.30 (화)",
-    lastPrescriptionDate: "-",
-    status: "처방전"
-  },
-  {
-    id: "82864",
-    name: "박명수",
-    birthdate: "980530",
-    gender: "남",
-    sa: "M/9m7d",
-    doctor: "-",
-    treatmentPeriod: "-",
-    registrationDate: "2025.01.30 (화)",
-    lastPrescriptionDate: "-",
-    status: "처방전"
-  },
-  {
-    id: "82864",
-    name: "박명수",
-    birthdate: "980530",
-    gender: "남",
-    sa: "M/9m7d",
-    doctor: "-",
-    treatmentPeriod: "-",
-    registrationDate: "2025.01.30 (화)",
-    lastPrescriptionDate: "-",
-    status: "처방전"
-  }
+export const PrescriptionData = [
+      {
+      id: "82869",
+      name: "박명수",
+      birthdate: "980530",
+      gender: "남",
+      sa: "M/9m7d",
+      doctor: "홍지원",
+      treatmentPeriod: "2025.01.30 ~ 2025.01.30",
+      registrationDate: "2025.01.30 (화)",
+      lastPrescriptionDate: "2025.01.30 (화)",
+      status: "completed" as const,
+    },
+    {
+      id: "82870",
+      name: "박명수",
+      birthdate: "980530",
+      gender: "남",
+      sa: "M/9m7d",
+      doctor: "-",
+      treatmentPeriod: "-",
+      registrationDate: "2025.01.30 (화)",
+      lastPrescriptionDate: "-",
+      status: "prescription" as const,
+    },
+    {
+      id: "82866",
+      name: "박명수",
+      birthdate: "980530",
+      gender: "남",
+      sa: "M/9m7d",
+      doctor: "김지희",
+      treatmentPeriod: "2025.01.30 ~ 2025.01.30",
+      registrationDate: "2025.01.30 (화)",
+      lastPrescriptionDate: "2025.01.30 (화)",
+      status: "prescription" as const,
+    },
+    {
+      id: "82864",
+      name: "박명수",
+      birthdate: "980530",
+      gender: "남",
+      sa: "M/9m7d",
+      doctor: "-",
+      treatmentPeriod: "-",
+      registrationDate: "2025.01.30 (화)",
+      lastPrescriptionDate: "-",
+      status: "waiting" as const,
+    },
+    {
+      id: "82864",
+      name: "박명수",
+      birthdate: "980530",
+      gender: "남",
+      sa: "M/9m7d",
+      doctor: "-",
+      treatmentPeriod: "-",
+      registrationDate: "2025.01.30 (화)",
+      lastPrescriptionDate: "-",
+      status: "waiting" as const,
+    },
+    {
+      id: "82865",
+      name: "최수현",
+      birthdate: "980530",
+      gender: "남",
+      sa: "M/87d",
+      doctor: "김지희",
+      treatmentPeriod: "2025.01.30 ~ 2025.01.30",
+      registrationDate: "2025.01.30 (화)",
+      lastPrescriptionDate: "2025.01.30 (화)",
+      status: "completed" as const,
+    },
+    {
+      id: "82864",
+      name: "박명수",
+      birthdate: "980530",
+      gender: "남",
+      sa: "M/9m7d",
+      doctor: "-",
+      treatmentPeriod: "-",
+      registrationDate: "2025.01.30 (화)",
+      lastPrescriptionDate: "-",
+      status: "completed" as const,
+    },
+    {
+      id: "82864",
+      name: "박명수",
+      birthdate: "980530",
+      gender: "남",
+      sa: "M/9m7d",
+      doctor: "-",
+      treatmentPeriod: "-",
+      registrationDate: "2025.01.30 (화)",
+      lastPrescriptionDate: "-",
+      status: "completed" as const,
+    },
 ];
 
-const PatientTable: React.FC<Props> = ({ data }) => {
+const PrescriptionTable: React.FC<Props> = ({ data }) => {
   return (
     <div className="box-border flex flex-col p-0 m-0 w-full overflow-x-auto">
       <div className="min-w-[900px]">
@@ -203,8 +203,8 @@ const PatientTable: React.FC<Props> = ({ data }) => {
         <div className="box-border flex flex-col p-0 m-0 whitespace-nowrap">
           {data.map((patient, index) => (
             <React.Fragment key={index}>
-              <PatientTableRow patient={patient} />
-              {index < patientData.length - 1 && (
+              <PrescriptionTableRow patient={patient} />
+              {index < PrescriptionData.length - 1 && (
                 <hr className="box-border p-0 m-0 w-full opacity-40 bg-slate-400 h-[0.4px]" />
               )}
             </React.Fragment>
@@ -215,4 +215,4 @@ const PatientTable: React.FC<Props> = ({ data }) => {
   );
 };
 
-export default PatientTable;
+export default PrescriptionTable;
